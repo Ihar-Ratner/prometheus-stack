@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-deployment-cm-alertmanager-conf
+  namespace: monitoring
+  labels:
+    name: prometheus-deployment-cm-alertmanager-conf
+data:
+  alertmanager.yml: |-
+    route:
+      receiver: 'webhook'
+      group_wait: 1m
+      group_interval: 5m
+      repeat_interval: 4h
+
+    receivers:
+    - name: webhook
+      webhook_configs:
+      - send_resolved: true
+        url: "https://972yiavb31.execute-api.eu-central-1.amazonaws.com/webhook"
